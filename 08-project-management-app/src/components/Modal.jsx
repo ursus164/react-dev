@@ -2,7 +2,10 @@ import ReactDOM from "react-dom";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import Button from "./Button";
 
-// Modal component is gonna be as flexible as possible. Therefore  its content {children} is wrapped in <dialog/> elem. However it could become more flexible and re-usable. We have to ensure that we can open the <dialog>...</dialog> element by calling a function that should be exposed by our custom component (Modal), that does not require the calling component - so another component that uses the modal, to know that a <dialog> elem is used internally. That should not be the information that is needed by the component that uses our modal component. This can be achieved by using forwardRef() and useImperativeHandle() hook.
+// Modal component is gonna be as flexible as possible. Therefore  its content {children} is wrapped in <dialog/> elem. However it could become more flexible and re-usable. 
+// We have to ensure that we can open the <dialog>...</dialog> element by calling a function that should be exposed by our custom component (Modal), 
+// that does not require the calling component - so another component that uses the modal, to know that a <dialog> elem is used internally. That should not be the information that is needed by the component that uses our modal component. 
+// This can be achieved by using forwardRef() and useImperativeHandle() hook.
 
 const Modal = forwardRef(function Modal({ children, btnLabel }, ref) {
   const dialog = useRef();
