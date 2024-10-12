@@ -16,3 +16,5 @@ In single app we can have multiple context's so we try to avoid wrapping compone
 
 --> useReducer() hook <--
 
+We can use that hook instead of useState() -> it is a function that reduce one or more complex values to a simpler one. For example [5,10,100] - reducer func -> 115. We can observe that in the cart compoenent where we reduced complex value (array of numbers) into single one (total price). However useReducer() hook is used for the same purpose, but in the state management
+
