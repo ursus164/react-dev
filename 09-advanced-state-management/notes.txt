@@ -8,4 +8,11 @@ Basically we use advanced state management in order to fix problem of managing s
 
 ContextAPI provides us with another react hook which allows us to use Reducer - it is made for sharing data across components and layers.
 
-We create context value and we provide that value around multiple components. Also it can easily be connected to state - so we also can get rid off all those props, passing state, state updating funcions throughout multiple component layers
+We create context value and we provide that value around multiple components. Also it can easily be connected to state - so we also can get rid off all those props, passing state, state updating funcions throughout multiple component layers.
+
+In single app we can have multiple context's so we try to avoid wrapping components with '<contextName>.Provider ...'
+
+
+
+--> useReducer() hook <--
+
