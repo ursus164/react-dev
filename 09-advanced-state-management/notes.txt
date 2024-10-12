@@ -1,0 +1,11 @@
+Basically we use advanced state management in order to fix problem of managing state in more complex react apps. We can get rid off problems showed below:
+
+--> Problem of shared state : Prop drilling - sharing props through multiple components, even though most of them do not need that data. Components are less reusable, we need to write extra 'boiler plate' code etc...
+
+--> Embracing Component Composition
+
+--> Sharing State with Context
+
+ContextAPI provides us with another react hook which allows us to use Reducer.
+
+Possible solutions
