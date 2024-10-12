@@ -2,6 +2,7 @@ import NewProject from "./components/NewProject";
 import ProjectsSidebar from "./components/ProjectsSidebar";
 import { useState, useRef } from "react";
 import NoProjectSelected from "./components/NoProjectSelected";
+import ProjectDetails from "./components/ProjectDetails";
 
 function App() {
   const [projectsState, setProjectsState] = useState({
@@ -41,9 +42,23 @@ function App() {
     setProjectsState((prevState) => {
       return {
         ...prevState,
-        selectedProjectId:undefined
-      }
-    })
+        selectedProjectId: undefined,
+      };
+    });
+  }
+
+  function handleDeleteProject() {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        projects: [
+          ...prevState.projects.filter(
+            (project) => project.id !== projectsState.selectedProjectId
+          ),
+        ],
+        selectedProjectId: undefined,
+      };
+    });
   }
 
   function handleProjectSelect(id) {
@@ -53,15 +68,23 @@ function App() {
         selectedProjectId: id, // null - because we are adding some project right now
       };
     });
-    
   }
 
   // console.log(projectsState)
   // console.log(projectsState.selectedProjectId);
-  
-  let content;
+
+  const selectedProject = projectsState.projects.find(
+    (project) => project.id === projectsState.selectedProjectId
+  );
+
+  let content = <ProjectDetails project={selectedProject} onDeleteProject={handleDeleteProject} />;
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject onProjectAdd={handleAddProject} onCancel={handleCancelProject} />;
+    content = (
+      <NewProject
+        onProjectAdd={handleAddProject}
+        onCancel={handleCancelProject}
+      />
+    );
   } else if (projectsState.selectedProjectId === undefined) {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
@@ -70,7 +93,12 @@ function App() {
     // container which keeps all main components and data has a height based on screen width - it is like a container
     <main className="h-screen my-8 flex flex-row gap-8">
       {/* after adding flexbox to main elem, it automatically stretches the ProjectSidebar component so that it takes the whole height of the screen */}
-      <ProjectsSidebar onStartAddProject={handleStartAddProject} projects={projectsState.projects} onProjectSelect={handleProjectSelect}/>
+      <ProjectsSidebar
+        onStartAddProject={handleStartAddProject}
+        projects={projectsState.projects}
+        onProjectSelect={handleProjectSelect}
+        selectedProjectId={projectsState.selectedProjectId}
+      />
       {content}
     </main>
   );
