@@ -1,4 +1,8 @@
-export default function Cart({ items, onUpdateItemQuantity }) {
+import { useContext } from "react"; // allows to access the context value
+import { CartContext } from "../store/shopping-cart-context";
+
+export default function Cart() {
+  const { items, updateCartItemQuantity } = useContext(CartContext); // when we access context value in a component, and that value then changes - the component function that accesses that value, will get re-executed by react just as the component function would also get re-executed if we would be using some internal state that was updated or its parent compoent was executed again.
   const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -20,11 +24,11 @@ export default function Cart({ items, onUpdateItemQuantity }) {
                   <span> ({formattedPrice})</span>
                 </div>
                 <div className="cart-item-actions">
-                  <button onClick={() => onUpdateItemQuantity(item.id, -1)}>
+                  <button onClick={() => updateCartItemQuantity(item.id, -1)}>
                     -
                   </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => onUpdateItemQuantity(item.id, 1)}>
+                  <button onClick={() => updateCartItemQuantity(item.id, 1)}>
                     +
                   </button>
                 </div>
