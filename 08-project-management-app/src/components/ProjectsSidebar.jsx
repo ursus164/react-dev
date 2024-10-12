@@ -17,6 +17,7 @@ export default function ProjectsSidebar({
       </div>
       <ul className="flex flex-col justify-center mt-8">
         {projects.map((project) => {
+<<<<<<< HEAD
           let cssClasses = '  px-4 py-2 hover:bg-stone-800 hover:cursor-pointer hover:text-stone-200 w-full text-center rounded-sm m-2 '
 
           if(project.id === selectedProjectId) {
@@ -25,6 +26,16 @@ export default function ProjectsSidebar({
             cssClasses += 'text-stone-400'
           }
 
+=======
+          let cssClasses =
+            "px-4 py-2 hover:bg-stone-800 hover:cursor-pointer hover:text-stone-200 w-full text-center rounded-sm m-2 ";
+
+          if (project.id === selectedProjectId) {
+            cssClasses += " bg-stone-800 text-stone-200";
+          } else {
+            cssClasses += " text-stone-400";
+          }
+>>>>>>> 04164dcbf52934cb80686b5776377dd8810391ca
           return (
             <li key={project.id}>
               <button
