@@ -1,0 +1,9 @@
+Dealing with side effects :
+
+1. Understanding side effects and useEffect() hook
+2. Effects and Dependencies
+3. When NOT to use useEffect()
+
+#######################################################
+
+Side effects are 'tasks' that don't impact the current compoenent render cycle. They need to be executed in order for app to work correctly but they do not affect the current component render cycle.
