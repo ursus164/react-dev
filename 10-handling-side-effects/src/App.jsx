@@ -1,5 +1,4 @@
-import { useRef, useState, useEffect } from "react";
-
+import { useRef, useState, useEffect, useCallback } from "react";
 import Places from "./components/Places.jsx";
 import { AVAILABLE_PLACES } from "./data.js";
 import Modal from "./components/Modal.jsx";
@@ -7,11 +6,20 @@ import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
 import logoImg from "./assets/logo.png";
 import { sortPlacesByDistance } from "./loc.js";
 
+// There is no need to run code below with useEffect() because it runs synchronously - data is fetched instantly. It can be even moved outside App component so it does not run again when the component is re-executed
+const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+const storedPlaces = storedIds.map(
+  (id) => {
+    return AVAILABLE_PLACES.find((place) => place.id === id);
+  } // give array of places based on id from local storage
+);
+
 function App() {
-  const modal = useRef();
+  // const modal = useRef();
   const selectedPlace = useRef();
-  const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
   const [availablePlaces, setAvailablePlaces] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     // getting the user location
@@ -30,12 +38,12 @@ function App() {
   }, []);
 
   function handleStartRemovePlace(id) {
-    modal.current.open();
+    setModalIsOpen(true);
     selectedPlace.current = id;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    setModalIsOpen(false);
   }
 
   function handleSelectPlace(id) {
@@ -53,20 +61,30 @@ function App() {
     const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
     if (storedIds.indexOf(id) === -1) {
       // id is not present in storedIds
-      localStorage.setItem("selectedPlaces", JSON.stringify([id, ...storedIds])); // setting browser storage in order not to loose data when we re-execute the window or website
+      localStorage.setItem(
+        "selectedPlaces",
+        JSON.stringify([id, ...storedIds])
+      ); // setting browser storage in order not to loose data when we re-execute the window or website
     }
   }
 
-  function handleRemovePlace() {
+  // useCallback() is a hook which prevents the wrapped function from recreating all the time in the loop. It should be used when we pass a function as dependency to useEffect()
+  const handleRemovePlace = useCallback(function handleRemovePlace() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
-    modal.current.close();
-  }
+    setModalIsOpen(false);
+    const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+    localStorage.setItem(
+      "selectedPlaces",
+      JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
+    );
+    // React will only re create the function with useCallback, when dependencies change - however if the dependency array is empty, there is nothing that could change therefore function is not re created
+  }, []);
 
   return (
     <>
-      <Modal ref={modal}>
+      <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
