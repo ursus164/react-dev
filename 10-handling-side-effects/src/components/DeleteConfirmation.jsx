@@ -1,4 +1,7 @@
 import { useEffect } from "react";
+import ProgressBar from "./ProgressBar";
+
+const TIMER = 3000;
 
 // Component responsible for rendering the content of the modal
 export default function DeleteConfirmation({ onConfirm, onCancel }) {
@@ -6,7 +9,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
     const timePtr = setTimeout(() => {
       // code that will be executed after the timeout in the second arg
       onConfirm();
-    }, 3000); // function built into the browser
+    }, TIMER); // function built into the browser
 
     // function that will be executed right before the effect function above runs again, or right before the whole components dismounts (is removed from DOM)
     return () => {
@@ -31,6 +34,8 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
           Yes
         </button>
       </div>
+      <ProgressBar timer={TIMER} /> 
+      {/* when the proress bar is a separate component, only that part will be re executed in set interval, not the whole DeleteConfirmation component */}
     </div>
   );
 }
