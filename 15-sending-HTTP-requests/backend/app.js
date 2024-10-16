@@ -31,7 +31,8 @@ app.get('/user-places', async (req, res) => {
 
   const places = JSON.parse(fileContent);
 
-  res.status(200).json({ places });
+  res.status(200).json({ places:places });
+  // res.status(200).json({ places }); // those are equivalent -> but we have to access that property. When it is not passed, the default is used
 });
 
 app.put('/user-places', async (req, res) => {
