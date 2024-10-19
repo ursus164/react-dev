@@ -13,23 +13,26 @@ export default function Quiz() {
 
   function handleSelectAnswer(selectedAnswer) {
     setUserAnswers((prevState) => {
-        return([...prevState,selectedAnswer]);
-    })
-
+      return [...prevState, selectedAnswer]; // appending new answer
+    });
   }
 
   return (
-    <div id="question">
-      <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
-      <ul id="answers">
-        {QUESTIONS[activeQuestionIndex].answers.map((answer) => {
-          return (
-            <li key={answer} className="answer">
-              <button onClick={() => handleSelectAnswer(answer)}>{answer}</button>
-            </li>
-          );
-        })}
-      </ul>
+    <div id="quiz">
+      <div id="question">
+        <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
+        <ul id="answers">
+          {QUESTIONS[activeQuestionIndex].answers.map((answer) => {
+            return (
+              <li key={answer} className="answer">
+                <button onClick={() => handleSelectAnswer(answer)}>
+                  {answer}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
