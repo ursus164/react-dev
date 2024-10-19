@@ -1,0 +1,14 @@
+Dealing with side effects :
+
+1. Understanding side effects and useEffect() hook
+2. Effects and Dependencies
+3. When NOT to use useEffect()
+
+#######################################################
+
+Side effects are 'tasks' that don't impact the current compoenent render cycle. They need to be executed in order for app to work correctly but they do not affect the current component render cycle.
+
+
+useEffect() hook and functions are very helpful when we have to synchronise prop values or state values to DOM api's like showModal() or close() functions. Functions defined with useEffect() will execute right after the component function. Since it executes after the component function (and not before, or at the same time), the connection between ref and dialog will be stablished at the execution point of time
+
+Effect dependencies are in the end simply prop or state values that are used inside of the effect function - so it is any value that causes the component function to execute again. Any other values like ref's or objects and methods that are built into the browser, are not considered dependencies. Because useEffect() only cares about dependencies that would cause the component function to execute again.  In addition, other effect dependencies would be functions or context values that depend on or use state props.
