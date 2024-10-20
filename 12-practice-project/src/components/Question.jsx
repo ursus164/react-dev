@@ -15,6 +15,16 @@ export default function Question({
     isCorrect: null,
   });
 
+  let timer = 15000
+
+  if(answer.selectedAnswer) {
+    timer = 2000;
+  }
+
+  if(answer.isCorrect !== null) {
+    timer = 3000;
+  }
+
   function handleSelectAnswer(answer) {
     setAnswer({
       selectedAnswer: answer,
@@ -28,8 +38,8 @@ export default function Question({
       });
       setTimeout(() => {
         onSelectAnswer(answer);
-      }, 2000);
-    }, 1000);
+      }, 3000);
+    }, 2000);
   }
 
   let answerState = "";
@@ -51,9 +61,11 @@ export default function Question({
       />
       {/* The onTimeout function trigerred error where progress bar was not reseting. When the function is created it is a new object in memory. So every time jsx code in this quiz component, a new function gets created */}
       <ProgressBar
-        timeout={TIMER}
-        onTimeout={onSkipAnswer}
+      key={timer}
+        timeout={timer}
+        onTimeout={ answer.selectedAnswer === '' ? onSkipAnswer : null}
         // key={activeQuestionIndex} // whenever index changes, it will triger the component to unmount and mount again
+        mode={answerState}
       />
     </div>
   );
