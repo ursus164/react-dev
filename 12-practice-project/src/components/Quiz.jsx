@@ -1,19 +1,16 @@
 // -> Showing currently active question to the user
 // -> Switching to the next question after user answear and registering user answears
 
-import React, { useEffect, useCallback, useRef } from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import QUESTIONS from "../questions.js";
 import quizCompleteImg from "../assets/quiz-complete.png";
-import ProgressBar from "./ProgressBar.jsx";
-
-const TIMER = 15000;
+import Question from "./Question.jsx";
 
 export default function Quiz() {
   //-> this is redundant because we can derive the current active quesiton by checking number of answers in the user answers state below. If 2 answers are given, the next question shown should be the third one
   //   const [ activeQuestionIndex, setActiveQuestionIndex ] = useState(0);
 
-  const shuffledAnswers = useRef(); // manage some value which will not change if the component function is executed again
   const [userAnswers, setUserAnswers] = useState([]);
   const [answerState, setAnswerState] = useState("unanswered");
   const activeQuestionIndex =
@@ -53,12 +50,6 @@ export default function Quiz() {
     [handleSelectAnswer]
   );
 
-  function shuffleQuestions(questionArray) {
-    return questionArray.sort(() => {
-      return Math.random() - 0.5; // negative value as a result shuffles values, the positive one keeps in the current order
-    });
-  }
-
   if (quizIsComplete) {
     return (
       <div id="summary">
@@ -68,57 +59,17 @@ export default function Quiz() {
     );
   }
 
-  // spreading array of answers -> it is needed because sort executed directly on our answers array will modify that array directly. We have to create a copy of it and work on that copy. We also have to check the correct answer in the original array - so that's why we don't want to modify original array
-
-  // when using ref, and it is initialized, the answer array will not change when we move on to the next question
-  if(!shuffledAnswers.current) {
-    // undefined, so we know that we do not have any shuffled answers because that is an initial state
-    const answers = [...QUESTIONS[activeQuestionIndex].answers];
-    shuffledAnswers.current = shuffleQuestions(answers);
-
-    // once the answers are shuffled, they won't be shuffled again even though component function can execute (and will execute) again
-  }
-
   return (
     <div id="quiz">
-      <div id="question">
-        <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
-        <ul id="answers">
-          {shuffledAnswers.current.map((answer) => {
-            let cssClasses = "";
-
-            if (
-              answerState === "answered" &&
-              answer === userAnswers[userAnswers.length - 1]
-            ) {
-              cssClasses = "selected";
-            }
-
-            if (
-              (answerState === "correct" || answerState === "wrong") &&
-              answer === userAnswers[userAnswers.length - 1]
-            ) {
-              cssClasses = answerState;
-            }
-
-            return (
-              <li key={answer} className="answer">
-                <button
-                  onClick={() => handleSelectAnswer(answer)}
-                  className={cssClasses}>
-                  {answer}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-        {/* The onTimeout function trigerred error where progress bar was not reseting. When the function is created it is a new object in memory. So every time jsx code in this quiz component, a new function gets created */}
-        <ProgressBar
-          timeout={TIMER}
-          onTimeout={handleSkipAnswer}
-          key={activeQuestionIndex} // whenever index changes, it will triger the component to unmount and mount again
-        />
-      </div>
+      <Question
+      key={activeQuestionIndex} // we have to reset all question component
+        questionText={QUESTIONS[activeQuestionIndex].text}
+        answers={QUESTIONS[activeQuestionIndex].answers}
+        onSelectAnswer={handleSelectAnswer}
+        selectedAnswer={userAnswers[userAnswers.length - 1]}
+        answerState={answerState}
+        onSkipAnswer={handleSkipAnswer}
+      />
     </div>
   );
 }
