@@ -1,7 +1,12 @@
 import { useRef } from "react";
 
 // Outputing list of shuffled answers
-export default function Answers({ answers, selectedAnswer, answerState, onSelect }) {
+export default function Answers({
+  answers,
+  selectedAnswer,
+  answerState,
+  onSelect,
+}) {
   const shuffledAnswers = useRef(); // manage some value which will not change if the component function is executed again
 
   function shuffleQuestions(questionArray) {
@@ -39,7 +44,8 @@ export default function Answers({ answers, selectedAnswer, answerState, onSelect
           <li key={answer} className="answer">
             <button
               onClick={() => onSelect(answer)}
-              className={cssClasses}>
+              className={cssClasses}
+              disabled={answerState !== ""}>
               {answer}
             </button>
           </li>
