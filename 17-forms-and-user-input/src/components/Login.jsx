@@ -1,11 +1,23 @@
+
 export default function Login() {
+
+
+  function handleSubmit(event) {
+    event.preventDefault(); // preventing default browser behaviour
+
+    console.log("Submitted") // log is not visible because page is reloading after clicking login button. Also URL query parameters were added to the request. It is a problem because our server (which is a development server) is not prepared for dealing with that request that are automatically send on submission.
+
+    // Also after we would deploy our app on some real server, that would be a server, that only aims to serve index.html file that is defined in the project - it still wouldn't be a server that is prepared to handle incoming form requests.
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h2>Login</h2>
 
       <div className="control-row">
         <div className="control no-margin">
-          <label htmlFor="email">Email</label>
+          {/* htmlfor is rect equivalent for 'for' in native html */}
+          <label htmlFor="email">Email</label> 
           <input id="email" type="email" name="email" />
         </div>
 
@@ -16,8 +28,10 @@ export default function Login() {
       </div>
 
       <p className="form-actions">
+        {/* Buttons inside a form will by default submit a form (generate a request), so HTTP requsest is created and is sent to the server that serves a website - that's a built in behaviour. So in our app it is a problem, unless we are using some full stack react solutions like NextJS.  */}
         <button className="button button-flat">Reset</button>
         <button className="button">Login</button>
+        {/* we can prevent that auto submitting by adding property type='button' */}
       </p>
     </form>
   );
