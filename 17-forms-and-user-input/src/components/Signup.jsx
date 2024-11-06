@@ -2,13 +2,15 @@ export default function Signup() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData(event.target); // built into browser 'name' prop must be set on inputs
+    const formData = new FormData(event.target); // built into browser 'name' prop must be set
     // const enteredEmail = formData.get('email') // getting value from the field with name email
     const data = Object.fromEntries(formData.entries()); // array of keys and input values
-    const acquisitionChannel = formData.getAll("acquisition"); // reatracting values from checkboxex with the same name prop
+    const acquisitionChannel = formData.getAll("acquisition"); // reatracting values
     data.acquisition = acquisitionChannel; // array of values from acquisition input
 
     console.log(data);
+
+    // event.target.reset(); 
   }
 
   // handling all inputs with refs or state can be tricky, and will take a lot of work
@@ -102,6 +104,7 @@ export default function Signup() {
 
       <p className="form-actions">
         <button type="reset" className="button button-flat">
+          {/* built in type -> reset - allows to reset form (other types are button/submit/reset) */}
           Reset
         </button>
         <button type="submit" className="button">
