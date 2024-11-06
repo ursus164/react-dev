@@ -27,6 +27,10 @@ export default function Login() {
       ...prevState, // rest of the values should not be lost
       [identifier]: value, // dynamically accessing the name of the property when it is stored in the variale
     }));
+    setDidEdit(prevEdit => ({
+      ...prevEdit,
+      [identifier]:false
+    }))
   }
 
   function handleSubmit(event) {
