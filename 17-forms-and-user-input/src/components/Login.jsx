@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Login() {
   // second approach of handling user inputs is via refs - it requires less code than when using state. We did not add any value props, onChange etc...
@@ -6,6 +6,9 @@ export default function Login() {
   // Downside of this approach is that resetting those values below is a little bit harder.
   // We should not do it directly -> email.current.value = ' ' - it is not recommended.
   // Also we will have quite a lot of refs if we have a more complex form. So setting all refs and connecting them to DOM elements can take some time
+
+  const [emailIsInvalid,setEmailIsInvalid] = useState(false);
+
   const email = useRef();
   const password = useRef();
 
@@ -16,6 +19,17 @@ export default function Login() {
     const enteredPassword = password.current.value;
 
     console.log(enteredEmail,enteredPassword)
+
+    const emailIsValid = enteredEmail.includes('@');
+
+    if(!emailIsValid) {
+      setEmailIsInvalid(true)
+      return;
+    }
+
+    setEmailIsInvalid(false);
+
+    console.log('Sending HTTP request...') // that won't execute after return above
   }
 
   return (
@@ -27,6 +41,7 @@ export default function Login() {
           {/* htmlfor is rect equivalent for 'for' in native html */}
           <label htmlFor="email">Email</label>
           <input id="email" type="email" name="email" ref={email} />
+          <div className="control-error">{emailIsInvalid && <p>Please enter a valid email address</p>}</div>
         </div>
 
         <div className="control no-margin">
