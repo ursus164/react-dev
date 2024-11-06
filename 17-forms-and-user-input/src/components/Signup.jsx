@@ -1,13 +1,21 @@
 export default function Signup() {
+  function handleSubmit(event) {
+    event.preventDefault();
 
-function handleSubmit(event) {
-  event.preventDefault();
-}
+    const formData = new FormData(event.target); // built into browser 'name' prop must be set on inputs
+    // const enteredEmail = formData.get('email') // getting value from the field with name email
+    const data = Object.fromEntries(formData.entries()); // array of keys and input values
+    const acquisitionChannel = formData.getAll("acquisition"); // reatracting values from checkboxex with the same name prop
+    data.acquisition = acquisitionChannel; // array of values from acquisition input
 
+    console.log(data);
+  }
 
+  // handling all inputs with refs or state can be tricky, and will take a lot of work
+  // it is better to use built in native features (in browser) to handle form submission
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h2>Welcome on board!</h2>
       <p>We just need a little bit of data from you to get you started 🚀</p>
 
