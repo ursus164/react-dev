@@ -39,12 +39,12 @@ function cartReducer(state, action) {
   if (action.type === "REMOVE_ITEM") {
     // ..remove item from the state
     const existingCartItemIndex = state.items.findIndex(
-      (item) => item.id === action.item.id
+      (item) => item.id === action.id
     );
     const updatedItems = [...state.items];
     // item exists / possibly quantity is 1 or more
     const existingItem = updatedItems[existingCartItemIndex];
-    
+
     if (existingItem.quantity === 1) {
       updatedItems.splice(existingCartItemIndex, 1);
     } else {
@@ -62,9 +62,25 @@ function cartReducer(state, action) {
 
 // provider function that will be wrapped around components to manage data
 export function CartContextProvider({ children }) {
-  useReducer(cartReducer, { items: [] }); // better option than useState() because it is easier to manage more complex states
+  const [cart, cartDispatch] = useReducer(cartReducer, { items: [] }); // better option than useState() because it is easier to manage more complex states
 
-  return <CartContext.Provider>{children}</CartContext.Provider>;
+  function addItem(item) {
+      cartDispatch({ type: "ADD_ITEM", item: item });
+    }
+    
+    function removeItem(id) {
+        cartDispatch({type:'REMOVE_ITEM', id: id}) // when names are the same it is possible to just pass id 
+    }
+
+    const cartContext = {
+      items: cart.items,
+      addItem : addItem,
+      removeItem : removeItem
+    };
+    
+  return (
+    <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>
+  );
 }
 
 export default CartContext;
