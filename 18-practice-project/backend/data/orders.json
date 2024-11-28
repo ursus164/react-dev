@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "items": [
+      {
+        "id": "m2",
+        "name": "Margherita Pizza",
+        "price": "12.99",
+        "description": "A classic pizza with fresh mozzarella, tomatoes, and basil on a thin and crispy crust.",
+        "image": "images/margherita-pizza.jpg",
+        "quantity": 1
+      }
+    ],
+    "customer": {
+      "name": "Aleksy Dąda",
+      "email": "Galawieprzowa@gmail.com",
+      "street": "Polskiej Organizacji Wojskowej",
+      "postal-code": "27-600",
+      "city": "Sandomierz"
+    },
+    "id": "491.3320154267229"
+  }
+]
