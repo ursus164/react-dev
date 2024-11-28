@@ -22,10 +22,10 @@ export default function useHttp(url,config, initialData) {
 
   // sendRequest is a dependency in useEffect because it is defined outside of request function. Therefore
   // to make sure that we do not end up in infinite loop - because we are updating some state in function, which wiill cause the component which uses this hook to execute again, and which will cause effect function to execute again - because sendRequest will change every time the surrounding component executes again because a new function object will be created - and to make sure we do not enter in infinite loop - the function should be wrapper with useCallback
-  const sendRequest = useCallback(async function sendRequest() {
+  const sendRequest = useCallback(async function sendRequest(data) {
     setIsLoading(true);
     try {
-      const resData =  await sendHttpRequest(url,config);
+      const resData =  await sendHttpRequest(url,{...config, body: data});
       setData(resData);
     } catch (error) {
       setError(error.message || "Something went wrong!");
