@@ -29,7 +29,7 @@ export default function Checkout() {
         headers : {
             'Content-Type' : 'application/json'
         },
-        body : JSON.stringify({
+        body: JSON.stringify({
             order: {
                 items : cartCtx.items,
                 customer: customerData
