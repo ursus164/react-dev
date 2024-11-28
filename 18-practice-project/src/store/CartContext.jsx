@@ -1,10 +1,11 @@
 // managing cart data and cart context
-import { createContext, useReducer } from "react";
+import { act, createContext, useReducer } from "react";
 
 const CartContext = createContext({
   items: [],
   addItem: (item) => {},
   removeItem: (id) => {},
+  clearCart: () => {}
 });
 
 function cartReducer(state, action) {
@@ -56,6 +57,10 @@ function cartReducer(state, action) {
 
     return { ...state, items: updatedItems };
   }
+
+  if(action.type === 'CLEAR_CART') {
+    return {...state, items: []};
+  }
   return state;
 }
 
@@ -71,10 +76,15 @@ export function CartContextProvider({ children }) {
         cartDispatch({type:'REMOVE_ITEM', id: id}) // when names are the same it is possible to just pass id 
     }
 
+    function clearCart() {
+      cartDispatch({type: "CLEAR_CART"})
+    }
+
     const cartContext = {
       items: cart.items,
       addItem : addItem,
-      removeItem : removeItem
+      removeItem : removeItem,
+      clearCart : clearCart
     };
     console.log(cartContext)
   return (
