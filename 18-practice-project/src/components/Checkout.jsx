@@ -19,6 +19,7 @@ export default function Checkout() {
     isLoading: isSending,
     error,
     sendRequest,
+    clearData
   } = useHttp("http://localhost:3000/orders", requestConfig);
   const cartCtx = useContext(CartContext);
   const userProgressCtx = useContext(UserProgressContext);
@@ -34,6 +35,7 @@ export default function Checkout() {
   function handleFinish() {
     userProgressCtx.hideCheckout();
     cartCtx.clearCart();
+    clearData(); // clear data provided by custom hook (success modal)
   }
 
   function handleSubmit(event) {
