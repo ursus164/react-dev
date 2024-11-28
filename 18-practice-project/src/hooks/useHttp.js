@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 
+// using async/await will result in returning promise object
 async function sendHttpRequest(url, config) {
   const response = await fetch(url, config);
 
@@ -24,7 +25,7 @@ export default function useHttp(url,config, initialData) {
   const sendRequest = useCallback(async function sendRequest() {
     setIsLoading(true);
     try {
-      const resData = sendHttpRequest(url,config);
+      const resData =  await sendHttpRequest(url,config);
       setData(resData);
     } catch (error) {
       setError(error.message || "Something went wrong!");
@@ -34,7 +35,7 @@ export default function useHttp(url,config, initialData) {
 
 // useEffect() is called after the component renders (in which we are executing the hook) - the first time the component renders, will be with default values set in useState above (isLoading : false etc...)
   useEffect(() => {
-    if(config && config.method === 'GET') {
+    if(config && (config.method === 'GET' || !config.method) || !config) {
         sendRequest();
     }
   }, [sendRequest,config])
