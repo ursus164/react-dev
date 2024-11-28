@@ -32,7 +32,6 @@ function cartReducer(state, action) {
       // item does not exist -> add to items array
       updatedItems.push({ ...action.item, quantity: 1 });
     }
-
     return { ...state, items: updatedItems };
   }
 
@@ -77,7 +76,7 @@ export function CartContextProvider({ children }) {
       addItem : addItem,
       removeItem : removeItem
     };
-    
+    console.log(cartContext)
   return (
     <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>
   );
