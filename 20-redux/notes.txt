@@ -47,4 +47,9 @@ The reducer function is a standard js function. It will be called by redux libra
 2. Dispatched Action
 
 Therefore a reducer function must always return a NEW STATE OBJECT. So it should be a 'pure' function - the same input always leads to the same output. And there should be none side effects, so we must not send any HTTP requests or write sth to local storage, or fetch sth from local storage.
+
+
+IMPORTANT:
+
+In reducer function - we should never mutate the state directly. We should always return new state by copying the state object (nested objects or arrays) and create brand new values --> It should be done in IMMUTABLE way ALWAYS!!!! Always copy and create a new object.
  

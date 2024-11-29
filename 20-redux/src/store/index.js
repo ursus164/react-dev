@@ -4,11 +4,19 @@ const initialState = { counter: 0, showCounter: true };
 
 const counterReducer = (state = initialState, action) => {
   if (action.type === "increment") {
-    return { counter: state.counter + 1, showCounter: state.showCounter };
+    // state should always be overwritten - we must not mutate the existing state!!!
+    // e.g state.counter++; ----> Absolutely NOT the way
+    return {
+      counter: state.counter + 1,
+      showCounter: state.showCounter, // the state objects are not merged, but overwritten - so we have to set all fields/values/states etc...
+    };
   }
 
   if (action.type === "decrement") {
-    return { counter: state.counter - 1, showCounter: state.showCounter };
+    return {
+      counter: state.counter - 1,
+      showCounter: state.showCounter,
+    };
   }
 
   if (action.type === "increase") {
@@ -18,11 +26,11 @@ const counterReducer = (state = initialState, action) => {
     };
   }
 
-  if(action.type === 'toggle') {
+  if (action.type === "toggle") {
     return {
-        showCounter: !state.showCounter,
-        counter: state.counter
-    }
+      showCounter: !state.showCounter,
+      counter: state.counter,
+    };
   }
 
   return state;
