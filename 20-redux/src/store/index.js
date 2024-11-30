@@ -1,11 +1,12 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const initialState = { counter: 0, showCounter: true };
+const initialCounterState = { counter: 0, showCounter: true };
+const initialAuthState = { isAuthenticated: false };
 
 const counterSlice = createSlice({
   // preparation of slice of a global state
   name: "counter",
-  initialState: initialState,
+  initialState: initialCounterState,
   reducers: {
     increment(state) {
       state.counter++; // it is now allowed - redux toolkit automatically detects code that mutates the state directly and it clones under the hood our state, create a new state object, keep all the state which we are not editing, and eventually overwrite settings which we want to change/edit - but in immutable way.
@@ -22,7 +23,7 @@ const counterSlice = createSlice({
   },
 });
 
-// counterSlice.actions.toggleCounter() 
+// counterSlice.actions.toggleCounter()
 // methods with id's created automatically by redux toolkit - from now we do not have to access reducers by using name of action (in which we can make some typo)
 
 // const counterReducer = (state = initialState, action) => {
@@ -59,8 +60,28 @@ const counterSlice = createSlice({
 //   return state;
 // };
 
-const store = configureStore({ reducer: { counterReducer: counterSlice.reducer } });
+const authSlice = createSlice({
+  name: "auth",
+  initialState: initialAuthState,
+  reducers: {
+    login(state) {
+        state.isAuthenticated = true;
+    },
+    logout(state) {
+        state.isAuthenticated = false;
+    }
+  },
+});
+
+const store = configureStore({
+  reducer: {
+    counterReducer: counterSlice.reducer,
+    authReducer: authSlice.reducer,
+  },
+});
 // only one reducer is available for store, therefore instead of using standard redux combineReducers method, we will use recommended methods from redux/toolkit. Redux wants one main reducer function which is responsible for global state - but what if we have multiple state slices with single reducer function per slice? We could set the 'reducer:' value for the object and add multiple reducers - it will be like MAP of reducers. However with configure store the value for reducer can be a s
 
 export const counterActions = counterSlice.actions;
+export const authActions = authSlice.actions;
+
 export default store;
