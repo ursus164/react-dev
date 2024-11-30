@@ -14,13 +14,16 @@ const counterSlice = createSlice({
       state.counter--;
     },
     increase(state, action) {
-      state.counter += action.amount; // muttable looking way but for the purpose above it is not muttable way of editing state :)
+      state.counter += action.payload; // muttable looking way but for the purpose above it is not muttable way of editing state :)
     },
     toggleCounter(state) {
       state.showCounter = !state.showCounter;
     },
   },
 });
+
+// counterSlice.actions.toggleCounter() 
+// methods with id's created automatically by redux toolkit - from now we do not have to access reducers by using name of action (in which we can make some typo)
 
 // const counterReducer = (state = initialState, action) => {
 //   if (action.type === "increment") {
@@ -56,7 +59,8 @@ const counterSlice = createSlice({
 //   return state;
 // };
 
-const store = configureStore({ reducer: { counter: counterSlice.reducer } });
+const store = configureStore({ reducer: { counterReducer: counterSlice.reducer } });
 // only one reducer is available for store, therefore instead of using standard redux combineReducers method, we will use recommended methods from redux/toolkit. Redux wants one main reducer function which is responsible for global state - but what if we have multiple state slices with single reducer function per slice? We could set the 'reducer:' value for the object and add multiple reducers - it will be like MAP of reducers. However with configure store the value for reducer can be a s
 
+export const counterActions = counterSlice.actions;
 export default store;

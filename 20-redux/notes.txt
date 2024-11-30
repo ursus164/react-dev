@@ -53,3 +53,5 @@ IMPORTANT:
 
 In reducer function - we should never mutate the state directly. We should always return new state by copying the state object (nested objects or arrays) and create brand new values --> It should be done in IMMUTABLE way ALWAYS!!!! Always copy and create a new object.
  
+REDUX/TOOLKIT:
+createSlice() function automatically creates unique action identifier for our reducers!!!
