@@ -1,6 +1,6 @@
 import classes from "./Counter.module.css";
 import { useSelector,useDispatch } from "react-redux";
-import { counterActions } from '../store/index'
+import { counterActions } from '../store/counterSlice'
 
 const Counter = () => {
   // using useSelector will automatically set a subscription to redux store (behind the scenes)

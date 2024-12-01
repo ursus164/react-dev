@@ -1,0 +1,3 @@
+1. Dependencies arrays in for e.g useCallback() or useEffect() ==> We add no dependencies because state updating functions don't have to be added, because react guarantees that they never change. In the handleSelectAnswer func, we do not use any state or props and also not any other values that depend on state or props
+
+2. We can use Refs to manage values that are stored and managed independently from the component function lifecycle for which they belong.
