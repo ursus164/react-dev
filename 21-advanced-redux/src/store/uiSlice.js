@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialUiState = { toogleCart: false};
+const initialUiState = { toggleCart: false};
 
 const uiSlice = createSlice({
     name:'ui',
     initialState: initialUiState,
     reducers: {
         // map of actions representing methods in reducer
-        toogle(state) {
-            state.toogleCart = !state.toogleCart;
+        toggle(state) {
+            state.toggleCart = !state.toggleCart;
         }
     }
 })
