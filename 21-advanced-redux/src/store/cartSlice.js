@@ -19,9 +19,11 @@ const cartSlice = createSlice({
           totalPrice: newItem.price,
           name: newItem.title,
         }); // possible with redux toolkit because it makes sure that data (existing state) is not manipulated directly
+        state.totalQuantity += 1;
       } else {
         existingItem.quantity++;
         existingItem.totalPrice += existingItem;
+        state.totalQuantity += 1;
       }
     },
     removeItem(state, action) {
@@ -31,11 +33,11 @@ const cartSlice = createSlice({
       if (existingItem.quantity > 1) {
         existingItem.quantity--;
         existingItem.totalPrice -= existingItem.price;
-      }
-
-      if (existingItem.quantity === 1) {
+        state.totalQuantity -= 1;
+      } else {
         // delete item from array
         state.items = state.items.filter((item) => item.id !== deletedId);
+        state.totalQuantity -= 1;
       }
     },
   },
