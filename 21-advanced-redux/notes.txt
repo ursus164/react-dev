@@ -14,3 +14,5 @@ Possible options :
 THUNK - What it is?
 
 It is a function that delays an action until later. It returns another function that does NOT return the action itself but instead another function which eventually returns the actions.
+
+It is a common pattern to have action creators that can perform side effects and then can dispatch other actions which eventually reach the reducers as part of a flow-of-steps that should be taken.

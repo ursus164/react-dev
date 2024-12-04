@@ -2,8 +2,9 @@ import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
-import { uiActions } from "./store/uiSlice";
+import { useEffect } from "react";
+import { sendCartData } from "./store/cartSlice";
+
 import Notification from "./components/UI/Notification";
 
 let isInitial = true;
@@ -17,19 +18,11 @@ function App() {
 
   // useEffect will listen to changes - whether some dependencies change(state updates...), the code will run again
   useEffect(() => {
-    const sendCartData = async () => {
-  
-
-    };
-
     if(isInitial) {
       isInitial=false;
       return;
     }
-
-    sendCartData().catch((error) => {
-      
-    });
+    dispatch(sendCartData(cart)) // we are dispatching function, that return another function. Redux toolkit is prepared for that - if it sees that we are dispatching a action that is a function not the function object. It executes that function for us.
   }, [cart, dispatch]);
 
   return (

@@ -45,7 +45,7 @@ const cartSlice = createSlice({
 });
 
 //creating our own action creator - it immediately return another async function in where we dispatch actions
-const sendCartData = (cart) => {
+export const sendCartData = (cart) => {
   return async (dispatch) => {
     dispatch(
       uiActions.showNotification({
