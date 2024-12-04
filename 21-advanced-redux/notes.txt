@@ -16,3 +16,5 @@ THUNK - What it is?
 It is a function that delays an action until later. It returns another function that does NOT return the action itself but instead another function which eventually returns the actions.
 
 It is a common pattern to have action creators that can perform side effects and then can dispatch other actions which eventually reach the reducers as part of a flow-of-steps that should be taken.
+
+But why should we follow that pattern ? It is an alternative to have all that logic (responsible for side effects, fetching etc...) in components. With it, we keep our components LEAN by moving all that logic to action creator function. All that 'hard work' is now done in redux files not in the component
