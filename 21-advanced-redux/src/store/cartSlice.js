@@ -1,18 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialCartState = { items: [], totalQuantity: 0, totalAmount: 0 };
+const initialCartState = {
+  items: [],
+  totalQuantity: 0,
+  totalAmount: 0,
+  changed: false,
+};
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: initialCartState,
   reducers: {
-    fetchCart(state,action) {
+    fetchCart(state, action) {
       state.totalQuantity = action.payload.totalQuantity;
       state.items = action.payload.items;
     },
     addItem(state, action) {
       const newItem = action.payload; // extra data
       const existingItem = state.items.find((item) => item.id === newItem.id);
+      state.changed = true;
 
       if (!existingItem) {
         // creating our own data object which we want to store
@@ -33,6 +39,7 @@ const cartSlice = createSlice({
     removeItem(state, action) {
       const deletedId = action.payload;
       const existingItem = state.items.find((item) => item.id === deletedId);
+      state.changed = true;
 
       if (existingItem.quantity > 1) {
         existingItem.quantity--;
