@@ -22,7 +22,7 @@ const cartSlice = createSlice({
         state.totalQuantity += 1;
       } else {
         existingItem.quantity++;
-        existingItem.totalPrice += existingItem;
+        existingItem.totalPrice += existingItem.price;
         state.totalQuantity += 1;
       }
     },
