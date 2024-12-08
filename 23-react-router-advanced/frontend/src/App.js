@@ -38,7 +38,21 @@ const router = createBrowserRouter([
         path: "events",
         element: <EventsLayout />,
         children: [
-          { index: true, element: <EventsPage /> },
+          // just before the EventsPage will get rendered - the loader function will be executed by react router.
+          {
+            index: true,
+            element: <EventsPage />,
+            loader: async () => {
+              const response = await fetch("http://localhost:8080/events");
+
+              if (!response.ok) {
+                //...
+              } else {
+                const resData = await response.json();
+                return resData.events; // data which is returned will be available in corresponding component from router PATH e.g EventsPage. In async/await the promise is returned - but react router will take care of it and provide data from that promise automatically
+              }
+            },
+          },
           { path: ":event_id", element: <EventDetailPage /> },
           { path: "new", element: <NewEventPage /> },
           { path: ":event_id/edit", element: <EditEventPage /> },
