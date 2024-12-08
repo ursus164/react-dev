@@ -1,4 +1,3 @@
-import MainNavigation from "../components/MainNavigation";
 import { Link } from "react-router-dom";
 
 // Simulation of data possibly got from backend
