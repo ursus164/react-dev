@@ -35,7 +35,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    errorElement:<ErrorPage/>, // it will be shown to the screen whenever the error is generated in any route related code (including loaders)
+    errorElement: <ErrorPage />, // it will be shown to the screen whenever the error is generated in any route related code (including loaders)
     children: [
       { index: true, element: <HomePage /> },
       {
@@ -48,9 +48,19 @@ const router = createBrowserRouter([
             element: <EventsPage />,
             loader: EventsLoader,
           },
-          { path: ":event_id", element: <EventDetailPage />, loader: EventDetailLoader },
+          {
+            path: ":event_id",
+            loader: EventDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <EventDetailPage />,
+              },
+              { path: "edit", element: <EditEventPage /> },
+            ],
+          },
+
           { path: "new", element: <NewEventPage /> },
-          { path: ":event_id/edit", element: <EditEventPage /> },
         ],
       },
     ],
