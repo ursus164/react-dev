@@ -7,6 +7,7 @@ import NewEventPage from "./pages/NewEventPage";
 import HomePage from "./pages/HomePage";
 import EventsLayout from "./pages/EventsLayout";
 import { loader as EventsLoader } from "./pages/EventsPage";
+import ErrorPage from "./pages/Error";
 // Challenge / Exercise
 
 // 1. Add five new (dummy) page components (content can be simple <h1> elements)
@@ -33,13 +34,14 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement:<ErrorPage/>, // it will be shown to the screen whenever the error is generated in any route related code (including loaders)
     children: [
       { index: true, element: <HomePage /> },
       {
         path: "events",
         element: <EventsLayout />,
         children: [
-          // just before the EventsPage will get rendered - the loader function will be executed by react router.
+          // just before the EventsPage will get rendered - the loader function will be executed by react router. However react waits for the loader function to finish and then renders the corresponding component
           {
             index: true,
             element: <EventsPage />,
