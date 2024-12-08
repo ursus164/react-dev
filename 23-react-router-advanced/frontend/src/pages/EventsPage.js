@@ -1,35 +1,26 @@
-import { Link } from "react-router";
-
-const EVENTS = [
-  {
-    id: "e1",
-    title: "Event in Oklahoma",
-    description: "Dancing event in Oklahoma city",
-  },
-  {
-    id: "e2",
-    title: "Music Festival in New York",
-    description: "A grand music festival in Central Park",
-  },
-  {
-    id: "e3",
-    title: "Tech Conference in San Francisco",
-    description: "Annual tech conference with industry leaders",
-  },
-  {
-    id: "e4",
-    title: "Art Exhibition in Paris",
-    description: "Exhibition showcasing modern art",
-  },
-];
+import { useEffect, useState } from "react";
 
 function EventsPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [fetchedEvents, setFetchedEvents] = useState();
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    async function fetchEvents() {
+      setIsLoading(true);
+      const response = await fetch('http://localhost:8080/events')
+
+      if(!response.ok) {
+        setError("Fetching events failed!")
+      } else {
+        const resData = await response.json()
+        setFetchedEvents(resData.events)
+      }
+      setIsLoading(false);
+    }
+  },[])
   return (
     <>
-      <h1>Events page</h1>
-      <ul>
-        {EVENTS.map(event => <li key={event.id}><Link to={event.id}>{event.title}</Link></li>)}
-      </ul>
     </>
   );
 }
