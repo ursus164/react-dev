@@ -1,11 +1,1 @@
-{
-  "events": [
-    {
-      "id": "e1",
-      "title": "A dummy event",
-      "date": "2023-02-22",
-      "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
-      "description": "Join this amazing event and connect with fellow developers."
-    }
-  ]
-}
+{"events":[{"title":"asd","image":"https://media.wired.com/photos/60a4131594944dc095a58ed9/master/w_1600,c_limit/Gear-GoogleIO-Sundar_Pichai_03.jpg","date":"2024-12-20","description":"asddas","id":"3b508d90-29a4-4bd1-9607-4af7e4320935"},{"title":"Google","image":"https://media.wired.com/photos/60a4131594944dc095a58ed9/master/w_1600,c_limit/Gear-GoogleIO-Sundar_Pichai_03.jpg","date":"2003-05-20","description":"Super event guglowski","id":"4583c1e7-9487-4294-989a-da0ac462f998"},{"id":"e1","title":"A dummy event","date":"2023-02-22","image":"https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg","description":"Join this amazing event and connect with fellow developers."}]}
