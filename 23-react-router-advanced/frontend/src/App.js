@@ -6,6 +6,7 @@ import EditEventPage from "./pages/EditEventPage";
 import NewEventPage from "./pages/NewEventPage";
 import HomePage from "./pages/HomePage";
 import EventsLayout from "./pages/EventsLayout";
+import { loader as EventsLoader } from "./pages/EventsPage";
 // Challenge / Exercise
 
 // 1. Add five new (dummy) page components (content can be simple <h1> elements)
@@ -42,16 +43,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <EventsPage />,
-            loader: async () => {
-              const response = await fetch("http://localhost:8080/events");
-
-              if (!response.ok) {
-                //...
-              } else {
-                const resData = await response.json();
-                return resData.events; // data which is returned will be available in corresponding component from router PATH e.g EventsPage. In async/await the promise is returned - but react router will take care of it and provide data from that promise automatically
-              }
-            },
+            loader: EventsLoader,
           },
           { path: ":event_id", element: <EventDetailPage /> },
           { path: "new", element: <NewEventPage /> },
