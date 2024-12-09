@@ -53,6 +53,6 @@ describe("<Greeting/>", () => {
     const outputParagraph = screen.queryByText("good to see you", {
       exact: false,
     });
-    expect(outputParagraph).not.toBeInTheDocument();
+    expect(outputParagraph).toBeNull();
   });
 });
